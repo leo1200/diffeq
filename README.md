@@ -14,5 +14,10 @@ We hope, this repository can help everyone, keen on learning more on numerical s
 
 ## Some Visualizations
 ### Phase space animation
-![Alt Text](https://github.com/leo1200/diffeq/blob/master/figures/anims/phase_space.gif)
+![phase space visualization](https://github.com/leo1200/diffeq/blob/master/figures/anims/phase_space.gif)
 ### Graph coloring
+![graph coloring](https://github.com/leo1200/diffeq/blob/master/figures/bruss_graph_colored.svg)
+### Colored sparsity pattern
+![sparsity coloring](https://github.com/leo1200/diffeq/blob/master/figures/colored_sparsity_pattern.svg)
+### Solution to the simplified Brusselator
+![brusselator](https://github.com/leo1200/diffeq/blob/master/figures/bruss_impl_quasi_newton.svg)
