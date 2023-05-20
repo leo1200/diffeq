@@ -7,8 +7,8 @@ SMALL_SIZE = 13
 MEDIUM_SIZE = 16
 BIGGER_SIZE = 18
 
-matplotlib.use("SVG")
-plt.rcParams['svg.fonttype'] = 'none'
+# matplotlib.use("SVG")
+# plt.rcParams['svg.fonttype'] = 'none'
 
 # matplotlib.rcParams['font.family'] = 'Avenir'
 
@@ -91,9 +91,28 @@ def impl_test(dt = 8 / 1000):
     plt.savefig("figures/stiff_impl" + str(dt).replace(".","-") + ".svg")
     plt.clf()
 
-if __name__ == "__main__":
-    expl_test(dt = 0.0005)
-    expl_test(dt = 0.002)
-    expl_test(dt = 0.004)
+def nearby_solutions():
+    T = 1; dt = 4 / 1000
+    A = np.array([[998, 1998], [-999, -1999]])
+    for i in range(10):
+        y_0 = np.array([i, 1])
+        (t, y) = simple_stepper(lambda y, f, dt: implicit_euler_step_linear_system(y, A, dt), y_0, stiff_example, dt, T)
+        plt.plot(t, y[:, 0], label = r"$y_1$", linewidth = 3, color = "cornflowerblue")
+        plt.plot(t, y[:, 1], label = r"$y_2$", linewidth = 3, color = "orange")
+    plt.xlabel("t in arbitrary units")
+    plt.ylabel(r"$y_1, y_2$")
+    # plt.legend()
+    # plt.title("Solution of a Stiff ODE using the Implicit Euler Scheme, dt = " + str(dt), pad=20)
+    plt.title("Nearby solutions vary rapidly", pad=20)
+    
+    plt.show()
+    plt.clf()
 
-    impl_test(0.01)
+
+if __name__ == "__main__":
+    # expl_test(dt = 0.0005)
+    # expl_test(dt = 0.002)
+    # expl_test(dt = 0.004)
+
+    # impl_test(0.01)
+    nearby_solutions()
