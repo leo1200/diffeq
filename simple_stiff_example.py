@@ -108,6 +108,38 @@ def nearby_solutions():
     plt.show()
     plt.clf()
 
+# Plot the solution in 2D and also the vector field of the ODE
+def plot_solution_2D(dt = 8 / 1000):
+
+    y_0 = np.array([1, 0]); T = 1
+    A = np.array([[998, 1998], [-999, -1999]])
+    f = stiff_example
+    (t, y) = simple_stepper(lambda y, f, dt: implicit_euler_step_linear_system(y, A, dt), y_0, stiff_example, dt, T)
+
+
+    plt.plot(y[:, 0], y[:, 1], label = "solution", linewidth = 3, color = "cornflowerblue")
+    plt.xlabel(r"$y_1$")
+    plt.ylabel(r"$y_2$")
+    plt.title("Solution of a Stiff ODE using the Implicit Euler Scheme, dt = " + str(dt), pad=20)
+    plt.legend()
+
+    # plot vector field
+    x = np.linspace(-2, 2, 20)
+    y = np.linspace(-2, 2, 20)
+    X, Y = np.meshgrid(x, y)
+    U = np.zeros(X.shape)
+    V = np.zeros(Y.shape)
+    for i in range(len(x)):
+        for j in range(len(y)):
+            U[i, j] = f(np.array([X[i, j], Y[i, j]]))[0]
+            V[i, j] = f(np.array([X[i, j], Y[i, j]]))[1]
+    plt.quiver(X, Y, U, V)
+    plt.xlabel(r"$y_1$")
+    plt.ylabel(r"$y_2$")
+    plt.title("Vector field of the ODE", pad=20)
+    plt.show()
+    plt.clf()
+
 
 if __name__ == "__main__":
     # expl_test(dt = 0.0005)
@@ -115,4 +147,5 @@ if __name__ == "__main__":
     # expl_test(dt = 0.004)
 
     # impl_test(0.01)
-    nearby_solutions()
+    # nearby_solutions()
+    plot_solution_2D(dt = 0.01)

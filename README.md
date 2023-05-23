@@ -5,7 +5,7 @@ This repository contains material accompanying the seminar talk by Daniel Richte
 We hope, this repository can help everyone, keen on learning more on numerical solvers, stiff differential equations and programming and visualizing in Julia (although I have learned a bit of Julia only in the course of this project).
 
 ## Overview on the Material in the Repository
-- Presentation slides: Numerical_Approaches_for_Solving_Differential_Equations.pdf
+- Presentation slides: slides.pdf
 - Efficiently solving stiff differential equations at the hand of a simplified Brussletor problem: efficiently_solfving_stiff_differential_equations.ipynb / pdf
 - Analysis of a simple linear stiff system: simple_stiff_example.py
 - Phase space visualization for different integrators: stream_plots.py
