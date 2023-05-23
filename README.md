@@ -14,10 +14,10 @@ We hope, this repository can help everyone, keen on learning more on numerical s
 
 ## Acknowledgements
 We thank the whole course for the attentive listening during the seminar talk - here are the promised qustioner badges:
-![image]({https://img.shields.io/badge/Claus-%F0%9F%9A%80-blue})
-![image]({https://img.shields.io/badge/Robin-%F0%9F%9A%80-blue})
-![image]({https://img.shields.io/badge/Hans-%F0%9F%9A%80-blue})
-![image]({https://img.shields.io/badge/unknown%20name%20please%20contact%20us-%F0%9F%9A%80-blue})
+![image]({https://img.shields.io/badge/Claus-%F0%9F%9A%80-blue.svg})
+![image]({https://img.shields.io/badge/Robin-%F0%9F%9A%80-blue.svg})
+![image]({https://img.shields.io/badge/Hans-%F0%9F%9A%80-blue.svg})
+![image]({https://img.shields.io/badge/unknown%20name%20please%20contact%20us-%F0%9F%9A%80-blue.svg})
 
 ## Some Visualizations
 ### Phase space animation
