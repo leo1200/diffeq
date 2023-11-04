@@ -68,10 +68,25 @@ def expl_test(dt = 8 / 1000):
     plt.xlabel("t in arbitrary units")
     plt.ylabel(r"$y_1, y_2$")
     # plt.title("Solution of a Stiff ODE using the Explicit Euler Scheme, dt = " + str(dt), pad=20)
-    plt.title("Explicit Euler Scheme, dt = " + str(dt), pad=20)
+    plt.title(r"Explicit Euler Scheme, $\Delta t =$ " + str(dt), pad=20)
     plt.legend()
     plt.savefig("figures/stiff_ex" + str(dt).replace(".","-") + ".svg")
     plt.clf()
+
+def expl_test_ax(ax, dt = 8 / 1000, dtstring = ""):
+    y_0 = np.array([1, 0]); T = 1
+    (t, y) = simple_stepper(explicit_euler_step, y_0, stiff_example, dt, T)
+
+    y_true = true_solution(t).T
+    ax.plot(t, y_true[:, 0], label = r"true $y_1$", linewidth = 3, color = "cornflowerblue")
+    ax.plot(t, y_true[:, 1], label = r"true $y_1$", linewidth = 3, color = "orange")
+    ax.plot(t, y[:, 0], label = r"$y_1$", linestyle = "dashed", color = "navy")
+    ax.plot(t, y[:, 1], label = r"$y_2$", linestyle = "dashed", color = "red")
+    ax.set_xlabel("t in arbitrary units")
+    ax.set_ylabel(r"$y_1, y_2$")
+    # plt.title("Solution of a Stiff ODE using the Explicit Euler Scheme, dt = " + str(dt), pad=20)
+    ax.set_title(r"$\Delta t = $" + str(dt) + ", so " + dtstring, pad = 20)
+    ax.legend()
 
 def impl_test(dt = 8 / 1000):
     y_0 = np.array([1, 0]); T = 1
@@ -86,7 +101,7 @@ def impl_test(dt = 8 / 1000):
     plt.xlabel("t in arbitrary units")
     plt.ylabel(r"$y_1, y_2$")
     # plt.title("Solution of a Stiff ODE using the Implicit Euler Scheme, dt = " + str(dt), pad=20)
-    plt.title("Implicit Euler Scheme, dt = " + str(dt), pad=20)
+    plt.title(r"Implicit Euler Scheme, $\Delta t = $" + str(dt), pad=20)
     plt.legend()
     plt.savefig("figures/stiff_impl" + str(dt).replace(".","-") + ".svg")
     plt.clf()
@@ -120,7 +135,7 @@ def plot_solution_2D(dt = 8 / 1000):
     plt.plot(y[:, 0], y[:, 1], label = "solution", linewidth = 3, color = "cornflowerblue")
     plt.xlabel(r"$y_1$")
     plt.ylabel(r"$y_2$")
-    plt.title("Solution of a Stiff ODE using the Implicit Euler Scheme, dt = " + str(dt), pad=20)
+    plt.title(r"Solution of a Stiff ODE using the Implicit Euler Scheme, $ \Delta t = $" + str(dt), pad=20)
     plt.legend()
 
     # plot vector field
@@ -142,10 +157,17 @@ def plot_solution_2D(dt = 8 / 1000):
 
 
 if __name__ == "__main__":
-    # expl_test(dt = 0.0005)
-    # expl_test(dt = 0.002)
-    # expl_test(dt = 0.004)
+    expl_test(dt = 0.0005)
+    expl_test(dt = 0.002)
+    expl_test(dt = 0.004)
 
-    # impl_test(0.01)
+    # fig, axs = plt.subplots(1, 3, figsize=(15, 5))
+    # expl_test_ax(axs[0], dt = 0.0005, dtstring = r"$\Delta t < 1/1000$")
+    # expl_test_ax(axs[1], dt = 0.002, dtstring = r"$1/1000 < \Delta t < 2/1000$")
+    # expl_test_ax(axs[2], dt = 0.004, dtstring = r"$2/1000 < \Delta t$")
+    # plt.tight_layout()
+    # plt.savefig("figures/stiff_expl.svg")
+
+    impl_test(0.01)
     # nearby_solutions()
-    plot_solution_2D(dt = 0.01)
+    # plot_solution_2D(dt = 0.01)

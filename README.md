@@ -4,6 +4,9 @@ This repository contains material accompanying the seminar talk by Daniel Richte
 
 We hope, this repository can help everyone, keen on learning more on numerical solvers, stiff differential equations and programming and visualizing in Julia (although I have learned a bit of Julia only in the course of this project).
 
+## Errata and Updates
+- in the current version of the slides we very strongly advocate for symplectic methods for all kinds of situations where conservational properties are of interest, which is also the "classical" standpoint; if you look, however, at a package for N-Body-Simulations like rebound, the default integrator is indeed not symplectic (see Rein et Spiegel, 2015 for reasoning on this) and for some high-precision settings something like Clean Numerical Simulations (CNS) might make sense
+
 ## Overview on the Material in the Repository
 - Presentation slides: slides.pdf
 - Efficiently solving stiff differential equations at the hand of a simplified Brussletor problem: efficiently_solfving_stiff_differential_equations.ipynb / pdf

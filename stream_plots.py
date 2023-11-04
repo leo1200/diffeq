@@ -10,8 +10,10 @@ def pendulum(theta, omega):
 
 def euler_step(theta, omega, dt):
     dtheta, domega = pendulum(theta, omega)
-    theta += dt*dtheta
-    omega += dt*domega
+    # Make an RK2 step
+    theta += 0.5 * dt * (dtheta + pendulum(theta + dt*dtheta, omega + dt*domega)[0])
+    omega += 0.5 * dt * (domega + pendulum(theta + dt*dtheta, omega + dt*domega)[1])
+
     return theta, omega
 
 def euler(theta0, omega0, T, dt):
@@ -98,12 +100,13 @@ def plot_phase_space(ax):
 
     ax.streamplot(Theta, Omega, dt * dTheta, dt * dOmega, density = 3, linewidth = lw, color = 'lightsteelblue')
 
-def plot_solution(ax, theta_sol, omega_sol, i, time, method = "leapfrog"):  
+def plot_solution(ax, theta_sol, omega_sol, i, time, method = "leapfrog", col = None):  
     # Plot pendulum solution
-    if method == "leapfrog":
-        col = "crimson"
-    else:
-        col = "darkblue"
+    if col is None:
+        if method == "leapfrog":
+            col = "crimson"
+        else:
+            col = "darkblue"
     sp = ax.plot(theta_sol[i, :], omega_sol[i, :], '-', lw = 2, label = method + " solution at t = {:.2f}".format(time[i]), color = col)
     return sp
 
@@ -174,4 +177,36 @@ def animate_phase_space(theta_sol_euler, omega_sol_euler, theta_sol_leap, omega_
     anim.save("figures/anims/phase_space.gif", fps = 30, dpi = 300)
     # plt.show()
 
-animate_phase_space(theta_sol_euler, omega_sol_euler, theta_sol_leap, omega_sol_leap, time)
+def plot_multiple_timepoints(theta_sol_euler, omega_sol_euler, theta_sol_leap, omega_sol_leap, time, timepoints):
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (10, 6), gridspec_kw={'width_ratios': [3, 1]})
+    plot_phase_space(ax1)
+    ax1.set_xlabel(r"$\theta$")
+    ax1.set_ylabel(r"$\omega$")
+    ax1.set_title("Pendulum Streamline Plot")
+    ax1.legend(loc = "upper left")
+
+    plot_area(ax2, time, calc_area(theta_sol_euler, omega_sol_euler), method = "RK2")
+    plot_area(ax2, time, calc_area(theta_sol_leap, omega_sol_leap), method = "leapfrog")
+
+    # Plot vertical line at current time
+    ax2.axvline(time[0], color = "k", ls = "--", lw = 1)
+
+    colors_leap = ["crimson", "darkorange", "orange"]
+    colors_euler = ["darkblue", "mediumblue", "royalblue"]
+
+    for ind, i in enumerate(timepoints):
+        plot_solution(ax1, theta_sol_euler, omega_sol_euler, i, time, method = "RK2", col = colors_euler[ind])
+        plot_solution(ax1, theta_sol_leap, omega_sol_leap, i, time, method = "leapfrog", col = colors_leap[ind])
+
+        # Plot vertical line at timepoint
+        ax2.axvline(time[i], color = "k", ls = "--", lw = 1)
+
+    ax1.legend(loc = "upper left")
+    ax2.legend(loc = "lower center")
+
+    plt.savefig("figures/phase_spaceA.svg")
+
+    
+
+# animate_phase_space(theta_sol_euler, omega_sol_euler, theta_sol_leap, omega_sol_leap, time)
+plot_multiple_timepoints(theta_sol_euler, omega_sol_euler, theta_sol_leap, omega_sol_leap, time, [0, 2500, 5000])
